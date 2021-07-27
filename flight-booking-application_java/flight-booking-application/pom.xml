@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cts.flight_booking_app</groupId>
+	<artifactId>flight-booking-application</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>flight-booking-application</name>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.5.2</version>
+		<relativePath />
+	</parent>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>admin-application</module>
+		<module>user-application</module>
+		<module>flight_application_server</module>
+		<module>flight-master-data</module>
+		<module>flight-master-data-rest-client</module>
+		<module>flight-application-model</module>
+		<module>zuul-api-gateway</module>
+		<module>flight-booking-data-model</module>
+		<module>flight-app-authentication</module>
+	</modules>
+</project>

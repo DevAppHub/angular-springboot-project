@@ -1,0 +1,5 @@
+[{"id":1, "state_code":"BLR", "state_name":"Bangalore"},
+ {"id":2, "state_code":"MAS", "state_name":"Chennai"},
+ {"id":3, "state_code":"CHD", "state_name":"CHANDIGARH"},
+ {"id":4, "state_code":"PUN", "state_name":"PUNE"},
+ {"id":5, "state_code":"KOL", "state_name":"KOLKATA"}]

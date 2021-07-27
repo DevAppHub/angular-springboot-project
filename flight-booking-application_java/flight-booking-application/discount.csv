@@ -1,0 +1,5 @@
+[{"id":22, "created_by":"", "created_date":"", "discount_name":"TRY ONE", "discount_number":"DSO05", "price":500.0, "discount_validity":"2021-07-29 00:00:00", "web_ref_id":""},
+ {"id":23, "created_by":"", "created_date":"2021-07-01 19:52:41", "discount_name":"BOOKIT", "discount_number":"DS006", "price":1000.0, "discount_validity":"2021-08-08 00:00:00", "web_ref_id":"e700659e794b4a878161da17df4f9a27"},
+ {"id":25, "created_by":"", "created_date":"", "discount_name":"NEW BOOK", "discount_number":"DS0033", "price":1500.0, "discount_validity":"2021-08-28 00:00:00", "web_ref_id":""},
+ {"id":29, "created_by":"", "created_date":"2021-07-05 23:07:58", "discount_name":"PAY_PAYTM", "discount_number":"DS0032", "price":100.0, "discount_validity":"2021-08-08 00:00:00", "web_ref_id":"4e3f92eda7214886802230956cb5bc97"},
+ {"id":30, "created_by":"", "created_date":"2021-07-05 23:08:37", "discount_name":"NEW TRY", "discount_number":"DS001", "price":100.0, "discount_validity":"2021-09-25 00:00:00", "web_ref_id":"904b72fc135d4a97b58e001a396c46bb"}]
