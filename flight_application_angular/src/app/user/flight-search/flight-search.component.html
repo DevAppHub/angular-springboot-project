@@ -1,0 +1,215 @@
+<user-header></user-header>
+<div class="container-fluid">
+  <app-toasts></app-toasts>
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6 box">
+            <div class="h-100 p-5 text-white bg-light border rounded-3 " >
+                <h3 style="color: black;">Depart Flight Details</h3>
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Flight Number/Name</th>
+                            <th>Price</th>
+                            <th>Departure Date/Time</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let flight of ongoingFlight;let i = index">
+                            <td><i class="fa fa-plane"></i>{{flight.flight_no}}/{{flight.flight_name}}</td>
+                            <td>{{flight.price}}</td>
+                            <td>{{flight.departure_date_time}}</td>
+                            <td><button class="btn btn-outline-dark" [disabled]="isToFlightBooked" (click)=open(bookFlightModal,flight)>Book Flight</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-light border rounded-3">
+                <h3>Return Flight Details</h3>
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Flight Number/Name</th>
+                            <th>Price</th>
+                            <th>Departure Date/Time</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let flight of returnFlight;let i = index">
+                            <td><i class="fa fa-plane"></i>{{flight.flight_no}}/{{flight.flight_name}}</td>
+                            <td>{{flight.price}}</td>
+                            <td>{{flight.departure_date_time}}</td>
+                            <td><button class="btn btn-outline-dark" [disabled]="isReturnFlightBooked" (click)="open(bookFlightModal,flight)">Book FLight</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--book flight modal start-->
+<ng-template #bookFlightModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Booking Flight Ticket</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="bookFlightForm">
+        <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">User Email id</label>
+            <input type="email"  class="form-control" formControlName="email_id" placeholder="Email id" required autofocus>
+          </div>
+          <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Mobile Number</label>
+            <input type="text" maxlength="10" minlength="10"  class="form-control" formControlName="mobile_no" placeholder="Mobile Number" required autofocus>
+          </div>
+        <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Flight Number</label>
+        <input type="text"  class="form-control" formControlName="flight_no" placeholder="{{modalcontent.flight_no}}" readonly autofocus>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Flight Name</label>
+        <input type="text" class="form-control" formControlName="flight_name" placeholder="{{modalcontent.flight_name}}" readonly>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">No. of Travelers</label>
+        <input type="text" class="form-control" formControlName="no_of_travelers" placeholder="No of Travelers" required>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Departure Date</label>
+        <input type="text" class="form-control" formControlName="departure_date_time" placeholder="{{modalcontent.departure_date_time}}" required>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">From place</label>
+        <input type="text" class="form-control" formControlName="from_place" placeholder="{{modalcontent.from_place}}" readonly>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">To place</label>
+        <input type="text" class="form-control" formControlName="to_place" placeholder="{{modalcontent.to_place}}" readonly>
+      </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');bookFlight();openTravelerDetailsModal(travelerDetails);">Confirm</button>
+    </div>
+  </ng-template>
+  <!--book flight modal end-->
+
+  <!--Traveller Details modal start-->
+<ng-template #travelerDetails let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Traveller Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="travellerDetailsForm">
+        <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Name Of Passenger</label>Name Of Passenger:
+            <input type="text"  class="form-control" formControlName="name" placeholder="name Of Passenger" required >
+          </div>
+          <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Id Proof</label>Id Proof:
+            <input type="text" max="10" min="10"  class="form-control" formControlName="id_proof" placeholder="Id Proof" required >
+          </div>
+        <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Date Of Birth</label>Date Of Birth:
+        <input type="date"  class="form-control" formControlName="date_of_birth" placeholder="Date Of Birth" required >
+      </div>
+      <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Meal</label>Meal:
+        <select formControlName="meal_included"  class="form-control">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+      </div>
+      <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Meal Prefernce</label>Meal Preference:
+        <select formControlName="meal_preference"  class="form-control">
+            <option value="">Select</option>
+            <option value="Veg">veg</option>
+            <option value="Non-Veg">Non-veg</option>
+        </select>
+      </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" [disabled]="addActive" (click)="modal.close('Save click');openTravelerDetailsModal(travelerDetails);">Add</button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" [disabled]="canActivate" class="btn btn-outline-dark" (click)="modal.close('Save click');addTravellerDetails();openDiscountModal(discountModal)">Next</button>
+      </div>
+  </ng-template>
+  <!--Traveller Details modal end-->
+
+  <!--Discount Apply Details modal start-->
+<ng-template #discountModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Price Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-toasts></app-toasts>
+    <form [formGroup]="discountForm">
+      <div class=" editableForm">
+          <label for="inputEmail" class="sr-only ">Apply Coupon</label>Apply Coupon:
+          <select formControlName="discount_id"  class="form-control">
+            <option selected value="">Select</option>
+            <option *ngFor="let disc of discounts" value={{disc.discount_number}}>{{disc.discount_name}}</option>
+        </select>
+        </div>
+        <div class=" editableForm">
+          <label for="inputEmail" class="sr-only ">Total Amount</label>Total Amount:
+          <input type="text" max="10" min="10"  class="form-control" formControlName="amount" value='{{amountpayable}}' placeholder="{{amountpayable}}" readonly required >
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');applyDiscount();openDiscountModal(finalBookingPageModal)">Book</button>
+    </div>
+</ng-template>
+<!--Discount Apply Details modal end-->
+
+  <!--Payment Modal start-->
+  <ng-template #finalBookingPageModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Price Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="paymentForm">
+        <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Payment Method</label>Payment Method:
+            <select formControlName="payment_method"  class="form-control">
+              <option selected value="">Select</option>
+              <option value="UPI">UPI</option>
+              <option value="Debit Card">Debit Card</option>
+          </select>
+          </div>
+          <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Amount Payable</label>Amount Payable:
+            <input type="text" max="10" min="10"  class="form-control" formControlName="amount" value='{{amountpayable}}' placeholder="{{amountpayable}}" readonly required >
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');proceedForpayment();">Proceed</button>
+      </div>
+  </ng-template>
+  <!--payment modal end-->
+
+<user-footer></user-footer>

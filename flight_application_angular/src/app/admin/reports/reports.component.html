@@ -1,0 +1,15 @@
+<admin-header></admin-header>
+<div class="container-fluid">
+    <div class="wrapper bg-white formbox">
+        <form [formGroup]="reportForm">
+            <div class="form-group border-bottom d-flex align-items-center position-relative"> 
+                <input type="text" required formControlName="flight_no" placeholder="Flight Number" class="form-control">
+            </div>
+            <div class="form-group " >
+                 <button type="button" [disabled]="reportForm.invalid" class="box btn btn-primary rounded-0 d-flex justify-content-center text-center p-3" (click)="downloadReport()">Download</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<admin-footer></admin-footer>

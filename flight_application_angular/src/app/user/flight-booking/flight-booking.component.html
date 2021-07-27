@@ -1,0 +1,44 @@
+<user-header></user-header>
+<div class="container-fluid">
+    <div class="wrapper bg-white">
+        <form [formGroup]="flightSearchForm">
+            <!-- <form> -->
+            <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap"> <label class="option my-sm-0 my-2">
+                 <input type="radio" formControlName="tripType"  value="2">Round Trip <span class="checkmark"></span> </label> 
+                 <label class="option my-sm-0 my-2">
+                 <input type="radio" formControlName="tripType"  value="1">One Way <span class="checkmark"></span> </label>
+            </div>
+            <div class="form-group d-sm-flex margin">
+                <div class="  d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative">From Place:
+                    <select formControlName="from_city" class=" select-text form-select" aria-label=".form-select-lg example" >
+                         <option *ngFor="let location of locations" [ngValue]="location.stateCode"
+                         class="dropdown-item">{{location.stateName}}</option>
+                      </select>    
+                </div>
+                <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative"> To Place:
+                    <select formControlName="to_city" class="form-select" aria-label=".form-select-lg example" >
+                        <option *ngFor="let location of locations" value={{location.stateCode}}>{{location.stateName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group d-sm-flex margin">
+                <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
+                     <input type="date" required formControlName="depart_date" placeholder="Depart Date" class="form-control">
+                    <div class="label" id="depart"></div>
+                </div>
+                <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                     <input type="date" formControlName="return_date"  placeholder="Return Date" class="form-control">
+                    <div class="label" id="return"></div>
+                </div>
+            </div>
+            <div class="form-group border-bottom d-flex align-items-center position-relative"> 
+                <input type="text" required formControlName="no_of_passenger" placeholder="Traveller(s)" class="form-control">
+                <div class="label" id="psngr"></div><i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+            <div class="form-group my-3">
+                <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3" ><input type="submit" [disabled]="flightSearchForm.invalid" (click)="searchFlight()" value="Search Flight">  </div>
+            </div>
+        </form>
+    </div>
+</div>
+<user-footer></user-footer>

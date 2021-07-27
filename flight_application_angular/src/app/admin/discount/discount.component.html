@@ -1,0 +1,121 @@
+<admin-header></admin-header>
+<div class="container-fluid">
+<div class="card">
+  <admin-toasts></admin-toasts>
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4"><i class="fa fa-percent fa-2X" aria-hidden="true"></i>Discount Details</h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success"> 
+            <i class="fa fa-plus-square fa-2x" aria-hidden="true"(click)="open(addDiscountModal)" ></i>
+          </a>
+        </span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <tr>
+            <th class="text-center">Discount id</th>
+            <th class="text-center">Discount Name</th>
+            <th class="text-center">Discount Validity</th>
+            <th class="text-center">Discount Price</th>
+            <th class="text-center">Remove Discount</th>
+            <th class="text-center">Update</th>
+          </tr>
+          <tr *ngFor="let flight of discountList; let id = index">
+            <td>
+              <span  contenteditable="true">{{flight.discount_number}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.discount_name}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.discount_validity}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.discount_price}}</span>
+            </td>
+            <td>
+              <span class="table-remove">
+                <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="remove(flight.id)"><i class="fa fa-times" aria-hidden="true"></i>Cancel</button>
+              </span>
+            </td>
+            <td>
+                <span class="table-remove">
+                  <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="openUpdateDiscountModal(discountUpdateModal,flight)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Update</button>
+                </span>
+              </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--add discount  modal start-->
+<ng-template #addDiscountModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Discount Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addDiscountForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Discount Id</label>Discount Id
+      <input type="text"  class="form-control" formControlName="discount_number" placeholder="Discount Id" required autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Name</label>Discount Name
+      <input type="text" class="form-control" formControlName="discount_name" placeholder="Discount Name" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Price</label>Discount Price
+      <input type="number" class="form-control" formControlName="discount_price" placeholder="Discount discount_price" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Validity</label>Discount Validity
+      <input type="date" class="form-control" formControlName="discount_validity" placeholder="Discount Validity" required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="addDiscountForm.invalid" (click)="modal.close('Save click');addNewDiscount()">Add</button>
+  </div>
+</ng-template>
+<!--add discount  modal end-->
+
+<!--update discount  modal start-->
+<ng-template #discountUpdateModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update Discount Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateDiscountForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Discount Id</label>Discount Id
+      <input type="text"  class="form-control" formControlName="discount_number" placeholder="{{modalcontent.discount_number}}" required readonly autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Name</label>Discount Name
+      <input type="text" class="form-control" formControlName="discount_name" placeholder="{{modalcontent.discount_name}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Price</label>
+      <input type="text" class="form-control" formControlName="discount_price" placeholder="{{modalcontent.discount_price}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Discount Validity</label>Discount Validity
+      <input type="date" class="form-control" formControlName="discount_validity" placeholder="{{modalcontent.discount_validity}}"  required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"  (click)="modal.close('Save click');updateDiscountOffer()">Update</button>
+  </div>
+</ng-template>
+<!--update discount modal end-->
+
+<admin-footer></admin-footer>

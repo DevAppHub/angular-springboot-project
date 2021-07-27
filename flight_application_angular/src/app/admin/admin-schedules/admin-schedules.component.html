@@ -1,0 +1,230 @@
+<admin-header></admin-header>
+<div class="container-fluid">
+<div class="card">
+  <admin-toasts></admin-toasts>
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Airline Schedules</h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success"> 
+            <i class="fa fa-plus-square fa-2x" aria-hidden="true"(click)="open(openNewScheduleModal)"></i>
+          </a>
+        </span>
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success"> 
+           <i class="fa fa-search searchbox fa-2x" aria-hidden="true" (click)="open(searchScheduleModal)" ></i>
+          </a>
+        </span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <tr>
+            <th class="text-center">Flight Name</th>
+            <th class="text-center">Flight Number</th>
+            <th class="text-center">Departure Time</th>
+            <th class="text-center">Location From</th>
+            <th class="text-center">Location To</th>
+            <th class="text-center">No Of Passenger</th>
+            <th class="text-center">Cancel Flight</th>
+            <th class="text-center">Update</th>
+          </tr>
+          <tr *ngFor="let flight of flightData; let id = index">
+            <td>
+              <span  contenteditable="true"><i class="fa fa-plane"></i>{{flight.flight_name}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.flight_no}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.departure_date_time}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.from_place}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.to_place}}</span>
+            </td>
+            <td>
+                <span contenteditable="true" >{{flight.no_of_passenger}}</span>
+              </td>
+            <td>
+              <span class="table-remove">
+                <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="remove(flight.id)"><i class="fa fa-times" aria-hidden="true"></i>Cancel</button>
+              </span>
+            </td>
+            <td>
+                <span class="table-remove">
+                  <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="openUpdateModal(updateScheduleModal,flight)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Update</button>
+                </span>
+              </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--update airline schedule modal start-->
+<ng-template #updateScheduleModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Airlne Schedule</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateScheduleForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Flight Number</label>Flight Number:
+      <input type="text"  class="form-control" formControlName="flight_no" placeholder="{{modalcontent.flight_no}}" readonly required autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Flight Name</label>Flight Name:
+      <input type="text" class="form-control" formControlName="flight_name" placeholder="{{modalcontent.flight_name}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">No Of Passenger</label>Total No Of Passenger:
+      <input type="text" class="form-control" formControlName="no_of_passenger" placeholder="{{modalcontent.no_of_passenger}}" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Departure Date</label>Departure Date:
+      <input type="datetime-local" class="form-control" formControlName="departure_date_time" placeholder="{{modalcontent.departure_date_time}}" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">From place</label>From place:
+      <input type="text" class="form-control" formControlName="from_place" placeholder="{{modalcontent.from_place}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">To place</label>To place:
+      <input type="text" class="form-control" formControlName="to_place" placeholder="{{modalcontent.to_place}}" readonly required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');update();" ngbTooltip="Will disappear in 10s">Update</button>
+  </div>
+</ng-template>
+<!--update airline schedule modal end-->
+
+<!--add airline modal start-->
+<ng-template #openNewScheduleModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Airlne Schedule</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="airlineScheduleForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Flight Number</label>Flight Number:
+      <input type="text"  class="form-control" formControlName="flight_no" placeholder="Flight Number" required autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Flight Name</label>Flight Name:
+      <input type="text" class="form-control" formControlName="flight_name" placeholder="Flight Name" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">No Of Paasenger</label>Total No Of Passenger:
+      <input type="text" class="form-control" formControlName="no_of_passenger" placeholder="No Of Passenger" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Departure Date</label>Departure Date:
+      <input type="datetime-local" class="form-control" formControlName="departure_date_time" placeholder="Departure Date Time" required>
+    </div>
+    <div class=" editableForm">
+      <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative"> To Place:
+        <select formControlName="from_place" class="form-select" aria-label=".form-select-lg example" >
+            <option *ngFor="let location of locations" value={{location.stateCode}}>{{location.stateName}}</option>
+        </select>
+    </div>
+    </div>
+    <div class=" editableForm">
+      <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative"> To Place:
+        <select formControlName="to_place" class="form-select" aria-label=".form-select-lg example" >
+            <option *ngFor="let location of locations" value={{location.stateCode}}>{{location.stateName}}</option>
+        </select>
+    </div>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="airlineScheduleForm.invalid"  (click)="modal.close('Save click');addNewAirlineSchedule()">Add</button>
+  </div>
+</ng-template>
+<!--add airline modal end-->
+
+<!--search airline schedule modal start-->
+<ng-template #searchScheduleModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Search Airlne Schedule</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="searchScheduleForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Flight Number</label>Flight Number:
+      <input type="text"  class="form-control" formControlName="flight_no" placeholder="Flight Number" required autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Flight Name</label>Flight Name:
+      <input type="text" class="form-control" formControlName="flight_name" placeholder="Flight Name" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">From place</label>From place:
+      <input type="text" class="form-control" formControlName="from_place" placeholder="From place" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">To place</label>To place:
+      <input type="text" class="form-control" formControlName="to_place" placeholder="To place" required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click');searchSchedule();open(searchModalResult)">Search</button>
+  </div>
+</ng-template>
+<!--search airline schedule end-->
+
+<!--search airline schedule result modal start-->
+<ng-template #searchModalResult let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Search Airlne Schedule</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table >
+      <tr>
+        <th class="text-center">Flight Name</th>
+        <th class="text-center">Flight Number</th>
+        <th class="text-center">Cancel Flight</th>
+        <th class="text-center">Update</th>
+      </tr>
+      <tr *ngFor="let det of searchedResult; let id = index">
+        <td>
+          <span  contenteditable="true"><i class="fa fa-plane"></i>{{det.flight_name}}</span>
+        </td>
+        <td>
+          <span contenteditable="true" >{{det.flight_no}}</span>
+        </td>
+        <td>
+          <span class="table-remove">
+            <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="remove(det.id)"><i class="fa fa-times" aria-hidden="true"></i>Cancel</button>
+          </span>
+        </td>
+        <td>
+            <span class="table-remove">
+              <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="modal.dismiss('Cross click');openUpdateModal(updateScheduleModal,det)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                Update</button>
+            </span>
+          </td>
+      </tr>
+    </table>
+  </div>
+</ng-template>
+<!--search airline schedule result modal end-->
+
+<admin-footer></admin-footer>

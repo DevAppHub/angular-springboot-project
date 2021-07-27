@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/admin/admin-dashboard"><i class="fa fa-plane"></i>FlyBook</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link "  routerLink="/admin/manage-schedules" routerLinkActive="active">ManageSchedules</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/admin/manage-discounts" routerLinkActive="active">ManageDiscounts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/admin/manage-airelines" routerLinkActive="active">ManageAirelines</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  routerLink="/admin/reports" routerLinkActive="active">Reports</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()" >Logout</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>

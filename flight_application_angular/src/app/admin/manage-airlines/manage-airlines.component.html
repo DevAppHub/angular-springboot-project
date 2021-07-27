@@ -1,0 +1,183 @@
+<admin-header></admin-header>
+<div class="container-fluid">
+<div class="card">
+  <admin-toasts></admin-toasts>
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Available Airlines</h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success"> 
+            <i class="fa fa-plus-square fa-2x" aria-hidden="true"(click)="open(openAddAirlineModel)" ></i>
+          </a>
+        </span>
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <tr>
+            <th class="text-center">Flight Number</th>
+            <th class="text-center">Flight Name</th>
+            <th class="text-center">Model No</th>
+            <th class="text-center">No of Seat</th>
+            <th class="text-center">From Place</th>
+            <th class="text-center">To Place</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Manufactured By</th>
+            <th class="text-center">Manufactured Date</th>
+            <th class="text-center">Update</th>
+          </tr>
+          <tr *ngFor="let flight of flightList; let id = index">
+            <td>
+              <span  contenteditable="true"><i class="fa fa-plane"></i>{{flight.flight_no}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.flight_name}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.model_no}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.no_of_seats}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.from_place}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.to_place}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.price}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{flight.manufactured_by}}</span>
+            </td>
+            <td>
+                <span contenteditable="true" >{{flight.manufatured_date}}</span>
+              </td>
+            <td>
+                <span class="table-remove">
+                  <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="openUpdateModal(updateAirlineModal,flight)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Update</button>
+                </span>
+              </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--add airline modal start-->
+<ng-template #openAddAirlineModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Airlne</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="addAirlineForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Flight Number</label>Flight Number
+      <input type="text"  class="form-control" formControlName="flight_no" placeholder="Flight Number" required autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Flight Name</label>Flight Name
+      <input type="text" class="form-control" formControlName="flight_name" placeholder="Flight Name" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Model Number</label>Model Number
+      <input type="text" class="form-control" formControlName="model_no" placeholder="Model Number" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Manufactured By</label>Manufactured By
+      <input type="text" class="form-control" formControlName="manufactured_by" placeholder="Manufatured By" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Total No Of Seats</label>Total No Of Seats
+      <input type="text" class="form-control" formControlName="no_of_seats" placeholder="No Of Seats" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Manufatured Date</label>Manufatured Date
+      <input type="date" class="form-control" formControlName="manufatured_date" placeholder="Manufatured Date" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Departure Date Time</label>Departure Date Time
+      <input type="date" class="form-control" formControlName="departure_date_time" placeholder="Departure Date Time" required>
+    </div>
+    <div class=" editableForm">
+      <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative"> To Place:
+        <select formControlName="from_place" class="form-select" aria-label=".form-select-lg example" >
+            <option *ngFor="let location of locations" value={{location.stateCode}}>{{location.stateName}}</option>
+        </select>
+    </div>
+    </div>
+    <div class=" editableForm">
+      <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 position-relative"> To Place:
+        <select formControlName="to_place" class="form-select" aria-label=".form-select-lg example" >
+            <option *ngFor="let location of locations" value={{location.stateCode}}>{{location.stateName}}</option>
+        </select>
+    </div>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Price</label>Price
+      <input type="text" class="form-control" formControlName="price" placeholder="Price Per Seat" required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" [disabled]="addAirlineForm.invalid"  (click)="modal.close('Save click');addNewAirline()">Add</button>
+  </div>
+</ng-template>
+<!--add airline modal end-->
+<!--update airline modal start-->
+<ng-template #updateAirlineModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Airlne</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="updateAirlieForm">
+      <div class=" editableForm">
+      <label for="inputEmail" class="sr-only ">Flight Number</label>Flight Number
+      <input type="text" class="form-control" formControlName="flight_no" value="{{modalcontent.flight_no}}" placeholder="{{modalcontent.flight_no}}"  readonly autofocus>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Flight Name</label>Flight Name
+      <input type="text" class="form-control" formControlName="flight_name" placeholder="{{modalcontent.flight_name}}" required readonly>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Model Number</label>Model Number
+      <input type="text" class="form-control" formControlName="model_no" value="{{modalcontent.model_no}}" placeholder="{{modalcontent.model_no}}" required readonly>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Manufactured By</label>Manufactured By
+      <input type="text" class="form-control" formControlName="manufactured_by" placeholder="{{modalcontent.manufactured_by}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Total No Of Seats</label>Total No Of Seats
+      <input type="text" class="form-control" formControlName="no_of_seats" placeholder="{{modalcontent.no_of_seats}}" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Manufatured Date</label>Manufatured Date
+      <input type="text" class="form-control" formControlName="manufatured_date"  placeholder="{{modalcontent.manufatured_date}}" readonly required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">From placeholder</label>From placeholder
+      <input type="text" class="form-control" formControlName="from_place"  placeholder="{{modalcontent.from_place}}" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">To place</label>To place
+      <input type="text" class="form-control" formControlName="to_place" placeholder="{{modalcontent.to_place}}" required>
+    </div>
+    <div class=" editableForm">
+      <label for="inputPassword" class="sr-only">Price</label>Price
+      <input type="text" class="form-control" formControlName="price" placeholder="{{modalcontent.price}}" required>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark"  (click)="modal.close('Save click');update();">Update</button>
+  </div>
+</ng-template>
+<!--update airline modal end-->
+
+<admin-footer></admin-footer>
