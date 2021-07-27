@@ -3,6 +3,7 @@
 *.classpath
 *.project
 .factorypath
+.springBeans
 target/
 bin/
 .settings/
