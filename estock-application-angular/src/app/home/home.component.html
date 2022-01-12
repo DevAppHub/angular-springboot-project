@@ -1,0 +1,32 @@
+<!-- Background image -->
+<div >
+<div id="intro-example" class="p-5 text-center bg-image"
+style="background-image: url('/assets/images/background_img.jpg');"
+>
+<div class="mask" style="background-color: rgba(119, 168, 233, 0.7);">
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="text-white">
+      <h1 class="mb-3">Welcome To EStock Market</h1>
+      <h5 class="mb-4">By signing up, you agree to receive transactional updates or may also receive a call from an Upstox representative to help you with the account opening process</h5>
+    </div>
+  </div>
+</div>
+<div class="row" >
+        <div class="col-6 col-md-4"></div>
+        <div class="col-6 col-md-4" style="background-color: rgba(98, 115, 173, 0.7); padding-bottom: 30px; margin-top: 20px;">
+            <form [formGroup]="loginForm">
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label" style="color: rgb(25, 2, 70);">Email address</label>
+                  <input type="email" formControlName="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label" style="color: rgb(25, 2, 70);">Password</label>
+                  <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" (click)="login()" [disabled]="loginForm.invalid" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+    <div class="col-6 col-md-4"></div>
+    </div>
+  </div>
+<app-footer></app-footer>

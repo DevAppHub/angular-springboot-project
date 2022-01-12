@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.estock.modal.Company;
 import com.cts.estock.modal.StockExchange;
-import com.cts.estock.repository.StockExchangeRepository;
-import com.cts.estock.service.CompanyService;
+import com.cts.estock.service.MasterDataService;
 
 
 @RestController
@@ -23,14 +22,13 @@ import com.cts.estock.service.CompanyService;
 public class CompanyRestController {
 	
 	@Autowired
-	CompanyService companyService;
+	MasterDataService companyService;
 	
-	@Autowired
-	StockExchangeRepository stockExchangeRepo;
+	
 	
 	@GetMapping("/stock")
 	public List<StockExchange> getStockExchangeList() {
-		return stockExchangeRepo.findAll();
+		return companyService.getStockExchangeList();
 	}
 
 	@PostMapping("/company")

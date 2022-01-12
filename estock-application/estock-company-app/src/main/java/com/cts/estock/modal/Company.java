@@ -19,6 +19,7 @@ import lombok.Data;
 @Data
 public class Company implements Serializable{
 
+	
 	/**
 	 * 
 	 */
@@ -37,6 +38,18 @@ public class Company implements Serializable{
 	@NotBlank(message = "Company Name is mandatory")
 	@JsonProperty("company_name")
 	private String companyName;
+	
+	public Company() {
+	}
+
+	public Company(Long id, @NotBlank(message = "Company code is mandatory and should be unique") String companyCode,
+			@NotBlank(message = "Company Name is mandatory") String companyName) {
+		super();
+		this.id = id;
+		this.companyCode = companyCode;
+		this.companyName = companyName;
+	}
+	
 	
 	
 }

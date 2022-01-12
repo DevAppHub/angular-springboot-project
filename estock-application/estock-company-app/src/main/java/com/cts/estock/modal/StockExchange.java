@@ -29,4 +29,16 @@ public class StockExchange implements Serializable{/**
 	@JsonProperty("stock_name")
 	@Column(name="stock_name")
 	private String stockName;
+	
+	public StockExchange() {
+	}
+
+	public StockExchange(long id, String stockCode, String stockName) {
+		super();
+		this.id = id;
+		this.stockCode = stockCode;
+		this.stockName = stockName;
+	}
+	
+	
 }

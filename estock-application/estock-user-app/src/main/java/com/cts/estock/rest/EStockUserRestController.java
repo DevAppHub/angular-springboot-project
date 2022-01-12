@@ -2,6 +2,7 @@ package com.cts.estock.rest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,10 +46,39 @@ public class EStockUserRestController {
 	}
 
 	@PostMapping("/api/v1.0/market/stock/add/{companycode}")
-	public StockModal addStock(@RequestBody StockModal stockModal) {
+	public StockModal addStock(@RequestBody StockModal stockModal, @PathVariable("companycode") String companyCode) {
 		return estockUserService.addStock(stockModal);
 	}
 
+	@GetMapping("/api/v1.0/market/stock")
+	public List<StockModal> getAllStockDetails() {
+		return estockUserService.getAllStockDetails();
+	}
+	
+	@GetMapping("/api/v1.0/stock")
+	public List<Map<String,Object>> getStockList() {
+		return estockUserService.getStockList();
+	}
+	@GetMapping("/api/v1.0/company")
+	public List<Map<String, Object>> getCompanyList() {
+		return estockUserService.getCompanyList();
+	}
+	
+	@DeleteMapping("/api/v1.0/market/stock/delete/{id}")
+	public boolean deleteStockDetails(@PathVariable("id") Long id) {
+		return estockUserService.deleteStockDetails(id);
+	}
+	
+	@GetMapping("/api/v1.0/market/stock/status")
+	public Map<String, Object> getDailyStatus() {
+		return estockUserService.getDailyStatus();
+	}
+	
+	@GetMapping("/api/v1.0/market/stock/info/{companycode}")
+	public List<StockModal> getStockDetailsBasedOnCompanyCode(@PathVariable("companycode") String companyCode) {
+		return estockUserService.getStockDetailsBasedOnCompanyCode(companyCode);
+	}
+	
 	@GetMapping("/api/v1.0/market/stock/get/{companycode}/{startdate}/{enddate}")
 	public List<StockModal> getStockDetails(@PathVariable("companycode") String companyCode,
 			@PathVariable("startdate") Date startDate, @PathVariable("enddate") Date enddate) {

@@ -41,7 +41,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (findByEmail == null) {
 			User user = new User();
 			user.setEmail(request.getUsername());
-			user.setIsAdmin("N");
 			user.setMobileNumber(request.getMobileNumber());
 			user.setName(request.getFirstName() + "" + request.getLastName());
 			user.setPassword(passwordEncoder.encode(request.getPassword()));

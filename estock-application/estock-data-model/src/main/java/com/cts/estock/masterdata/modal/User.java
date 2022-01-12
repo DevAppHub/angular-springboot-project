@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="admin_user")
+@Table(name="user")
 public class User {
 
 	@Id
@@ -29,9 +29,6 @@ public class User {
 	
 	@Column(name="mobile_number")
 	private String mobileNumber;
-	
-	@Column(name="is_admin")
-	private String isAdmin;
 	
 	
 }

@@ -9,6 +9,7 @@ bin/
 .settings/
 logs/
 *.impl
+node_modules
 
 # Log file
 *.log

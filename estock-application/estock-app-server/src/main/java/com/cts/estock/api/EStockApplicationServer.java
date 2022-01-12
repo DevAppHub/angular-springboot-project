@@ -14,7 +14,6 @@ public class EStockApplicationServer {
 	public static final Logger logger=LoggerFactory.getLogger(EStockApplicationServer.class);
 	
 	public static void main(String[] args) {
-		logger.info("E stock application server started...");
 		SpringApplication.run(EStockApplicationServer.class,args);
 	}
 }

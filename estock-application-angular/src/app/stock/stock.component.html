@@ -1,0 +1,194 @@
+<app-header></app-header>
+<div class="container-fluid">
+    <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Stock Details</h3>
+        <div class="card-body">
+          <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2">
+              <a class="text-success"> 
+                <i class="fa fa-plus-square fa-2x" aria-hidden="true"(click)="open(openAddStockModal)"></i>
+              </a>
+            </span>
+            <span class="table-add float-right mb-3 mr-2">
+                <a class="text-success"> 
+                  <i class="fa fa-search searchbox fa-2x" aria-hidden="true"(click)="openModal(SearchStockModal)" ></i>
+                </a>
+              </span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+              <tr>
+                <th class="text-center">Comapny Code</th>
+                <th class="text-center">Company Name</th>
+                <th class="text-center">Stock Code/Name</th>
+                <th class="text-center">Stock Price</th>
+                <th class="text-center">Valid Date</th>
+                <th class="text-center">Action</th>
+              </tr>
+              <tr *ngFor="let stock of stockData; let id = index">
+                <td>
+                  <span  contenteditable="true"><i class="fa fa-list"></i>{{stock.companyCode}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{stock.companyName}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{stock.stockCode}}/{{stock.stockName}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{stock.stockPrice}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{stock.validDate}}</span>
+                </td>
+                <td>
+                    <span class="table-remove">
+                      <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="remove(stock.id)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                    </span>
+                  </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+<app-footer></app-footer>
+
+<!--add stock modal start-->
+<ng-template #openAddStockModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add New Stock</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="wrapper bg-white">
+      <form [formGroup]="addStockForm">
+          <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Company</label>Company:
+              <select formControlName="companyCode"  class="form-control">
+                <option *ngFor="let comp of companyList" [ngValue]="comp.company_id"
+              class="dropdown-item">{{comp.company_name}}</option>
+            </select>
+            </div>
+            <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Stock</label>Stock:
+              <select formControlName="stockCode"  class="form-control">
+                <option *ngFor="let stock of stockList" [ngValue]="stock.stock_code"
+                class="dropdown-item">{{stock.stock_name}}</option>
+            </select>
+            </div>
+            <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Stock Price</label>Stock Price:
+              <input type="text" max="10" min="10"  class="form-control" formControlName="stockPrice" placeholder="Stock Price" required >
+            </div>
+          <div class=" editableForm">
+          <label for="inputEmail" class="sr-only ">Valid Date</label>Valid Date:
+          <input type="date"  class="form-control" formControlName="validDate" placeholder="Valid Date" required >
+        </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" [disabled]="addStockForm.invalid"  (click)="modal.close('Save click');addStock()">Add</button>
+    </div>
+  </ng-template>
+  <!--add stock modal end-->
+
+ <!--stock search modal start-->
+ <ng-template #SearchStockModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Stock Search</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]=stockSearchForm>
+            <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Company</label>Company:
+              <select formControlName="companyCode"  class="form-control">
+                <option *ngFor="let comp of companyList" [ngValue]="comp.company_id"
+              class="dropdown-item">{{comp.company_name}}</option>
+            </select>
+            </div>
+            <!-- <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Stock</label>Stock:
+              <select formControlName="stockCode"  class="form-control">
+                <option *ngFor="let stock of stockList" [ngValue]="stock.stock_code"
+                class="dropdown-item">{{stock.stock_name}}</option>
+            </select>
+          </div> -->
+          <!-- <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Valid Date</label>Valid Date:
+            <input type="date"  class="form-control" formControlName="validDate" placeholder="Valid Date" required >
+        </div> -->
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" [disabled]="stockSearchForm.invalid" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click');searchCompany();openModal(searchedStockModalResult)">Search</button>
+    </div>
+</ng-template>
+<!--stock search modal end-->
+
+<ng-template  #searchedStockModalResult let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Company Search</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Company Code</th>
+                    <th>Company Name</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stock of stockSearchResult;let i = index">
+                <td><i class="fa fa-list"></i>{{stock.companyCode}}</td>
+                    <td>{{stock.companyName}}</td>
+                    <td><button class="btn btn-outline-primary" (click)="modal.dismiss('Cross click');viewDetails(viewStockModal,stock)"><i
+                                class="fa fa-eye"></i>View</button></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </ng-template>
+     <!-- view  modal start-->
+<ng-template #viewStockModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Stock Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <div class="wrapper bg-white">
+        <form [formGroup]="addStockForm">
+            <div class=" editableForm">
+              <label for="inputEmail" class="sr-only ">Company</label>Company:
+              <input type="text" max="10" min="10"  class="form-control" formControlName="stockPrice" placeholder="{{modalcontent.companyName}}" readonly >
+              </div>
+              <div class=" editableForm">
+                <label for="inputEmail" class="sr-only ">Stock </label>Stock:
+                <input type="text" max="10" min="10"  class="form-control" formControlName="stockPrice" placeholder="{{modalcontent.stockName}}" readonly >
+              </div>
+              <div class=" editableForm">
+                <label for="inputEmail" class="sr-only ">Stock Price</label>Stock Price:
+                <input type="text" max="10" min="10"  class="form-control" formControlName="stockPrice" placeholder="{{modalcontent.stockPrice}}" readonly >
+              </div>
+            <div class=" editableForm">
+            <label for="inputEmail" class="sr-only ">Valid Date</label>Valid Date:
+            <input type="text"  class="form-control" formControlName="validDate" placeholder="{{modalcontent.validDate}}" required >
+          </div>
+          </form>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
+    </div>
+</ng-template>
+<!--view  modal end-->

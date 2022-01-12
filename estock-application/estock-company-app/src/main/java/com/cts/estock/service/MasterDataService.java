@@ -10,16 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cts.estock.modal.Company;
+import com.cts.estock.modal.StockExchange;
 import com.cts.estock.repository.CompanyRepository;
+import com.cts.estock.repository.StockExchangeRepository;
 import com.cts.estock.util.InvalidRequestException;
 
 @Service
-public class CompanyService {
+public class MasterDataService {
 	
 	public final Logger logger=LoggerFactory.getLogger(this.getClass().getName());
 	
 	@Autowired
 	CompanyRepository companyRepository;
+	
+	@Autowired
+	StockExchangeRepository stockExchangeRepo;
 
 	public Company createCompany(Company company) {
 		logger.info("Company request {} ", company);
@@ -58,6 +63,10 @@ public class CompanyService {
 			 throw new InvalidRequestException("Company id "+id+" not found for delete company details ") ;
 		 }
 		 return isDelete;
+	}
+
+	public List<StockExchange> getStockExchangeList() {
+		return stockExchangeRepo.findAll();
 	}
 
 }

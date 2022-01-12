@@ -1,0 +1,177 @@
+<app-header></app-header>
+<div class="container-fluid">
+    <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Company Details</h3>
+        <div class="card-body">
+          <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2">
+              <a class="text-success"> 
+                <i class="fa fa-plus-square fa-2x" aria-hidden="true"(click)="open(openAddCompanyModal)"></i>
+              </a>
+            </span>
+            <span class="table-add float-right mb-3 mr-2">
+                <a class="text-success"> 
+                  <i class="fa fa-search searchbox fa-2x" aria-hidden="true"(click)="openModal(searchCompanyModal)" ></i>
+                </a>
+              </span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+              <tr>
+                <th class="text-center">Comapny Code</th>
+                <th class="text-center">Company Name</th>
+                <th class="text-center">Company CEO</th>
+                <th class="text-center">Company Turnover</th>
+                <th class="text-center">Website</th>
+                <th class="text-center">Action</th>
+              </tr>
+              <tr *ngFor="let comp of companyData; let id = index">
+                <td>
+                  <span  contenteditable="true"><i class="fa fa-list"></i>{{comp.company_id}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{comp.company_name}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{comp.company_ceo}}</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{comp.company_turnover}}Cr.</span>
+                </td>
+                <td>
+                  <span contenteditable="true" >{{comp.company_website}}</span>
+                </td>
+                <td>
+                    <span class="table-remove">
+                      <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="btn btn-outline-primary" (click)="remove(comp.company_id)"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                    </span>
+                  </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+<app-footer></app-footer>
+
+<!--add company modal start-->
+<ng-template #openAddCompanyModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add New Company</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="addCompanyForm">
+        <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Company Code</label>Company Code:
+        <input type="text"  class="form-control" formControlName="company_id" placeholder="Company Code" required autofocus>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Name</label>Company Name:
+        <input type="text" class="form-control" formControlName="company_name" placeholder="Company Name" required>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company CEO</label>Company CEO:
+        <input type="text" class="form-control" formControlName="company_ceo" placeholder="Company CEO" required>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Turnover</label>Company Turnover:
+        <input type="text" class="form-control" formControlName="company_turnover" placeholder="Company Turnover In Crore" required>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Website Details</label>Company Website Details:
+        <input type="text" class="form-control" formControlName="company_website" placeholder="Company Website Url" required>
+      </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" [disabled]="addCompanyForm.invalid"  (click)="modal.close('Save click');addCompany()">Add</button>
+    </div>
+  </ng-template>
+  <!--add company modal end-->
+  <!--company search modal start-->
+<ng-template #searchCompanyModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Company Search</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]=companySearchForm>
+            <div class=" editableForm">
+                <label for="inputPassword" class="sr-only">Company Code</label>Company Code:
+                <input type="text" class="form-control" formControlName="company_id"
+                    placeholder="Company Code" required>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" [disabled]="companySearchForm.invalid" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click');searchCompany();openModal(searchedCompanyModalResult)">Search</button>
+    </div>
+</ng-template>
+<!--company search modal end-->
+<ng-template  #searchedCompanyModalResult let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Company Search</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                  <th class="text-center">Comapny Code</th>
+                  <th class="text-center">Company Name</th>
+                  <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="fa fa-list"></i>{{compSearchResult.company_id}}</td>
+                    <td>{{compSearchResult.company_name}}</td>
+                    <td><button class="btn btn-outline-primary" (click)="modal.dismiss('Cross click');viewDetails(viewCompanyModal,compSearchResult)"><i
+                                class="fa fa-eye"></i>View</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </ng-template>
+    <!-- view  modal start-->
+<ng-template #viewCompanyModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Company Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class=" editableForm">
+        <label for="inputEmail" class="sr-only ">Company Code</label>Company Code:
+        <input type="text"  class="form-control" formControlName="company_id" placeholder="{{modalcontent.company_id}}" readonly autofocus>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Name</label>Company Name:
+        <input type="text" class="form-control" formControlName="company_name" placeholder="{{modalcontent.company_name}}" readonly>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company CEO</label>Company CEO:
+        <input type="text" class="form-control" formControlName="company_ceo" placeholder="{{modalcontent.company_ceo}}" readonly>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Turnover</label>Company Turnover:
+        <input type="text" class="form-control" formControlName="company_turnover" placeholder="{{modalcontent.company_turnover}}" readonly>
+      </div>
+      <div class=" editableForm">
+        <label for="inputPassword" class="sr-only">Company Website Details</label>Company Website Details:
+        <input type="text" class="form-control" formControlName="company_website" placeholder="{{modalcontent.company_website}}" readonly>
+      </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
+    </div>
+</ng-template>
+<!--view  modal end-->

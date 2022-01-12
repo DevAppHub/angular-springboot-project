@@ -1,5 +1,7 @@
 package com.cts.estock.main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -14,7 +16,9 @@ import org.springframework.web.client.RestTemplate;
 @EntityScan(basePackages = "com.cts")
 @EnableJpaRepositories(basePackages = "com.cts")
 public class EstockApplication {
-
+	
+	public final Logger logger=LoggerFactory.getLogger(this.getClass().getName());
+	
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
