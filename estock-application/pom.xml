@@ -31,5 +31,6 @@
 		<module>estock-data-model</module>
 		<module>estock-user-app</module>
 		<module>estock-company-app</module>
+		<module>estock-cqrs</module>
 	</modules>
 </project>
